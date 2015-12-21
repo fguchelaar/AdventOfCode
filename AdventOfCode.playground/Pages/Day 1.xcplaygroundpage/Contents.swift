@@ -11,11 +11,12 @@ var f = input.characters.reduce(0) { (floor, char) -> Int in
 //: Part two
 var floor = 0
 var index = 0
+let searchForFloor = -1
 
 for char in input.characters {
     index++
     floor += (char == "(" ? 1 : -1)
-    if(floor == -1) {
+    if(floor == searchForFloor) {
         break
     }
 }
