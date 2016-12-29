@@ -20,7 +20,7 @@ struct Light {
     }
 }
 
-public class DaySix {
+open class DaySix {
 
     var commands : [String]
     let rows = 1000
@@ -29,15 +29,15 @@ public class DaySix {
     var lights : [[Light]]
     
     public init(input: String) {
-        commands = input.componentsSeparatedByCharactersInSet(.newlineCharacterSet())
-        lights = [[Light]](count: rows, repeatedValue: [Light](count: columns, repeatedValue: Light()))
+        commands = input.components(separatedBy: .newlines)
+        lights = [[Light]](repeating: [Light](repeating: Light(), count: columns), count: rows)
         for command in commands {
             performCommand(command)
         }
     }
     
 
-    func toggle(x1 : Int, _ y1 : Int, _ x2: Int, _ y2 : Int) {
+    func toggle(_ x1 : Int, _ y1 : Int, _ x2: Int, _ y2 : Int) {
         for col in x1...x2 {
             for row in y1...y2 {
                 lights[col][row].toggle()
@@ -45,7 +45,7 @@ public class DaySix {
         }
     }
     
-    func turnOn(x1 : Int, _ y1 : Int, _ x2: Int, _ y2 : Int) {
+    func turnOn(_ x1 : Int, _ y1 : Int, _ x2: Int, _ y2 : Int) {
         for col in x1...x2 {
             for row in y1...y2 {
                 lights[col][row].turnOn()
@@ -53,7 +53,7 @@ public class DaySix {
         }
     }
     
-    func turnOff(x1 : Int, _ y1 : Int, _ x2: Int, _ y2 : Int) {
+    func turnOff(_ x1 : Int, _ y1 : Int, _ x2: Int, _ y2 : Int) {
         for col in x1...x2 {
             for row in y1...y2 {
                 lights[col][row].turnOff()
@@ -61,15 +61,15 @@ public class DaySix {
         }
     }
     
-    func rangeFromCommand(command : String) -> (x1:Int, y1:Int, x2:Int,y2:Int) {
-        let index = command.rangeOfCharacterFromSet(NSCharacterSet(charactersInString: "123456789"))
+    func rangeFromCommand(_ command : String) -> (x1:Int, y1:Int, x2:Int,y2:Int) {
+        let index = command.rangeOfCharacter(from: CharacterSet(charactersIn: "123456789"))
         
-        let parts = command.substringFromIndex(index!.startIndex).componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: " ,"))
+        let parts = command.substring(from: index!.lowerBound).components(separatedBy: CharacterSet(charactersIn: " ,"))
         
         return (Int(parts[0])!, Int(parts[1])!,Int(parts[3])!, Int(parts[4])!)
     }
     
-    func performCommand(command : String) {
+    func performCommand(_ command : String) {
 
         let range = rangeFromCommand(command)
 
@@ -85,19 +85,19 @@ public class DaySix {
     }
         
 
-    public func solveA() -> Int {
+    open func solveA() -> Int {
         
         let numberOfLightsOn = lights.reduce(0) { (sumOfRows, rows) -> Int in
-            return sumOfRows + rows.reduce(0, combine: { (sumOfColumns, light) -> Int in
+            return sumOfRows + rows.reduce(0, { (sumOfColumns, light) -> Int in
                 return sumOfColumns + (light.state ? 1 : 0)
             })
         }
         return numberOfLightsOn
     }
     
-    public func solveB() -> Int {
+    open func solveB() -> Int {
         let totalBrightness = lights.reduce(0) { (sumOfRows, rows) -> Int in
-            return sumOfRows + rows.reduce(0, combine: { (sumOfColumns, light) -> Int in
+            return sumOfRows + rows.reduce(0, { (sumOfColumns, light) -> Int in
                 return sumOfColumns + light.brightness
             })
         }

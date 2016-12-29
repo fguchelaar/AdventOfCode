@@ -1,15 +1,15 @@
 //: # Advent of Code - [Day 9](http://adventofcode.com/day/9)
 import Foundation
 
-var input = try String(contentsOfURL:[#FileReference(fileReferenceLiteral: "input.txt")#])
-var routes = input.componentsSeparatedByCharactersInSet(.newlineCharacterSet())
+var input = try String(contentsOf:#fileLiteral(resourceName: "input.txt"))
+var routes = input.components(separatedBy: .newlines)
 
 var cities = Set<String>()
 var distances = Dictionary<String, Int>()
 
 // distances are symetric, so for convenience I'll add both directions
 for route in routes {
-    var parts = route.componentsSeparatedByString(" ")
+    var parts = route.components(separatedBy: " ")
     var city1 = parts[0]
     var city2 = parts[2]
     var distance = Int(parts[4])
@@ -24,9 +24,9 @@ for route in routes {
 
 var shortestPath = Int.max
 var longestPath = Int.min
-var used = Array<Bool>(count: cities.count, repeatedValue: false)
+var used = Array<Bool>(repeating: false, count: cities.count)
 
-func traverse(theCities: Array<String>, index : Int, pathSofar : Array<String>, distanceSofar : Int) {
+func traverse(_ theCities: Array<String>, index : Int, pathSofar : Array<String>, distanceSofar : Int) {
     var path = pathSofar
 
 //    if(distanceSofar < longestPath) {
@@ -61,4 +61,4 @@ func traverse(theCities: Array<String>, index : Int, pathSofar : Array<String>, 
     }
 }
 
-traverse(cities.sort(), index: 0, pathSofar: Array<String>(), distanceSofar: 0)
+traverse(cities.sorted(), index: 0, pathSofar: Array<String>(), distanceSofar: 0)

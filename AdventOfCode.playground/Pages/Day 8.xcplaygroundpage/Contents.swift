@@ -1,27 +1,27 @@
 //: # Advent of Code - [Day 8](http://adventofcode.com/day/8)
 import Foundation
 
-var input = try String(contentsOfURL:[#FileReference(fileReferenceLiteral: "input.txt")#])
-var lines = input.componentsSeparatedByCharactersInSet(.whitespaceAndNewlineCharacterSet())
+var input = try String(contentsOf:#fileLiteral(resourceName: "input.txt"))
+var lines = input.components(separatedBy: .whitespacesAndNewlines)
 
 var codeLength = 0
 var valueLength = 0
 
 for line in lines {
-    codeLength += line.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+    codeLength += line.lengthOfBytes(using: String.Encoding.utf8)
 
-    let trimmed = line.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\""))
-    let strippedDoubleBackslash = trimmed.stringByReplacingOccurrencesOfString("\\\\", withString: "|")
-    let strippedQuotes = strippedDoubleBackslash.stringByReplacingOccurrencesOfString("\\\"", withString: "_")
+    let trimmed = line.trimmingCharacters(in: CharacterSet(charactersIn: "\""))
+    let strippedDoubleBackslash = trimmed.replacingOccurrences(of: "\\\\", with: "|")
+    let strippedQuotes = strippedDoubleBackslash.replacingOccurrences(of: "\\\"", with: "_")
 
     var strippedHex = strippedQuotes
-    var hexRange = strippedQuotes.rangeOfString("\\x")
+    var hexRange = strippedQuotes.range(of: "\\x")
     while (hexRange != nil) {
-        strippedHex.replaceRange(Range<String.Index>(start: hexRange!.startIndex, end: hexRange!.startIndex.advancedBy(4)), with:"+")
-        hexRange = strippedHex.rangeOfString("\\x")
+        strippedHex.replaceSubrange((hexRange!.lowerBound ..< <#T##Collection corresponding to your index##Collection#>.index(hexRange!.lowerBound, offsetBy: 4)), with:"+")
+        hexRange = strippedHex.range(of: "\\x")
     }
     
-    valueLength += strippedHex.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+    valueLength += strippedHex.lengthOfBytes(using: String.Encoding.utf8)
 }
 
 print(codeLength - valueLength)
@@ -30,12 +30,12 @@ var encodedLength = 0
 var originalLength = 0
 
 for line in lines {
-    originalLength += line.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+    originalLength += line.lengthOfBytes(using: String.Encoding.utf8)
     
-    let enc1 = line.stringByReplacingOccurrencesOfString("\\", withString: "\\\\")
-    let enc2 = enc1.stringByReplacingOccurrencesOfString("\"", withString: "\\\"")
+    let enc1 = line.replacingOccurrences(of: "\\", with: "\\\\")
+    let enc2 = enc1.replacingOccurrences(of: "\"", with: "\\\"")
     let encoded = "\"\(enc2)\""
-    encodedLength += encoded.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)
+    encodedLength += encoded.lengthOfBytes(using: String.Encoding.utf8)
 }
 
 print(encodedLength - originalLength)

@@ -1,7 +1,7 @@
 //: # Advent of Code - [Day 2](http://adventofcode.com/day/2)
 import Foundation
 
-var input = try String(contentsOfURL:[#FileReference(fileReferenceLiteral: "input.txt")#])
+var input = try String(contentsOf:#fileLiteral(resourceName: "input.txt"))
 
 //: Part one
 struct Present {
@@ -10,7 +10,7 @@ struct Present {
     var h : Int
     
     init(dimensions : String) {
-        let dim = dimensions.componentsSeparatedByString("x").map { return Int($0)! }
+        let dim = dimensions.components(separatedBy: "x").map { return Int($0)! }
         l = dim[0]
         w = dim[1]
         h = dim[2]
@@ -27,7 +27,7 @@ struct Present {
     }
 }
 
-var presents = input.componentsSeparatedByCharactersInSet(.newlineCharacterSet()).map { Present(dimensions: $0) }
+var presents = input.components(separatedBy: .newlines).map { Present(dimensions: $0) }
 
 var totalPaperNeeded = presents.reduce(0) { (cumulative, present) -> Int in
     return cumulative + present.paperNeeded

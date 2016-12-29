@@ -1,12 +1,12 @@
 //: # Advent of Code - [Day 7](http://adventofcode.com/day/7)
 import Foundation
 
-var input = try String(contentsOfURL:[#FileReference(fileReferenceLiteral: "input.txt")#])
-var instructions = Set(input.componentsSeparatedByCharactersInSet(.newlineCharacterSet()))
+var input = try String(contentsOf:#fileLiteral(resourceName: "input.txt"))
+var instructions = Set(input.components(separatedBy: .newlines))
 
 var wires : Dictionary<String, Int16> = Dictionary<String,Int16>()
 
-func valueForOperand(operand : String) -> Int16? {
+func valueForOperand(_ operand : String) -> Int16? {
     if let value = Int16(operand) {
         return value
     }
@@ -21,10 +21,10 @@ func valueForOperand(operand : String) -> Int16? {
 while(!wires.contains { $0.0 == "a" }) {
     for instruction in instructions {
         
-        let parts = instruction.componentsSeparatedByString(" -> ")
+        let parts = instruction.components(separatedBy: " -> ")
         let wire = parts[1]
         
-        let circuit = parts[0].componentsSeparatedByString(" ")
+        let circuit = parts[0].components(separatedBy: " ")
         if circuit.count == 1 {
             if let value = valueForOperand(circuit[0]) {
                 wires[wire] = value

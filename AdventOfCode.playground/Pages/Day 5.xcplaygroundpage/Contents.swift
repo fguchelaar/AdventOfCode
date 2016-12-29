@@ -1,15 +1,15 @@
 //: # Advent of Code - [Day 5](http://adventofcode.com/day/5)
 import Foundation
 
-var input = try String(contentsOfURL:[#FileReference(fileReferenceLiteral: "input.txt")#])
-var words = input.componentsSeparatedByCharactersInSet(.newlineCharacterSet())
+var input = try String(contentsOf:#fileLiteral(resourceName: "input.txt"))
+var words = input.components(separatedBy: .newlines)
 
 //: Part one
 extension String {
     
     func containsAtLeastThreeVowels() -> Bool {
         return characters.reduce(0) { (cnt, char) -> Int in
-            return "aeiou".containsString(String(char)) ? cnt + 1 : cnt
+            return "aeiou".contains(String(char)) ? cnt + 1 : cnt
         } > 2
     }
     
@@ -26,7 +26,7 @@ extension String {
     
     func containsIllegalTuples() -> Bool {
         for tuple in ["ab", "cd", "pq", "xy"] {
-            if containsString(tuple){
+            if contains(tuple){
                 return true
             }
         }
@@ -52,9 +52,9 @@ extension String {
         if characters.count < 4 {
             return false
         }
-        for index in startIndex...endIndex.advancedBy(-3) {
-            let tuple = substringWithRange(Range<String.Index>(start: index, end: index.advancedBy(2)))
-            if substringFromIndex(index.advancedBy(2)).containsString(tuple) {
+        for index in startIndex...characters.index(endIndex, offsetBy: -3) {
+            let tuple = substring(with: (index ..< <#T##String.CharacterView corresponding to `index`##String.CharacterView#>.index(index, offsetBy: 2)))
+            if substring(from: <#T##String.CharacterView corresponding to `index`##String.CharacterView#>.index(index, offsetBy: 2)).contains(tuple) {
                 return true
             }
         }
@@ -62,9 +62,9 @@ extension String {
     }
 
     func containsRepeatingLetterWithOneInBetween() -> Bool {
-        for index in startIndex...endIndex.advancedBy(-3) {
-            let triple = substringWithRange(Range<String.Index>(start: index, end: index.advancedBy(3)))
-            if triple.characters[triple.startIndex] == triple.characters[triple.endIndex.predecessor()] {
+        for index in startIndex...characters.index(endIndex, offsetBy: -3) {
+            let triple = substring(with: (index ..< <#T##String.CharacterView corresponding to `index`##String.CharacterView#>.index(index, offsetBy: 3)))
+            if triple.characters[triple.startIndex] == triple.characters[triple.characters.index(before: triple.endIndex)] {
                 return true
             }
         }
