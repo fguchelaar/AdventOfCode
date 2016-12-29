@@ -116,7 +116,6 @@
 		0186F7301C285B3700ACCD48 /* AdventOfCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AdventOfCode; sourceTree = BUILT_PRODUCTS_DIR; };
 		0186F7331C285B3700ACCD48 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0186F73D1C29881900ACCD48 /* AdventOfCode-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AdventOfCode-Bridging-Header.h"; sourceTree = "<group>"; };
-		0186F7431C2989FC00ACCD48 /* module.map */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,7 +239,6 @@
 		0186F7271C285B3700ACCD48 = {
 			isa = PBXGroup;
 			children = (
-				0186F7421C2989FC00ACCD48 /* CommonCrypto */,
 				0186F7321C285B3700ACCD48 /* AdventOfCode */,
 				011163161E1480F1004B5293 /* aoc-day19 */,
 				011162D21E106F46004B5293 /* aoc-day20 */,
@@ -275,14 +273,6 @@
 				0186F73D1C29881900ACCD48 /* AdventOfCode-Bridging-Header.h */,
 			);
 			path = AdventOfCode;
-			sourceTree = "<group>";
-		};
-		0186F7421C2989FC00ACCD48 /* CommonCrypto */ = {
-			isa = PBXGroup;
-			children = (
-				0186F7431C2989FC00ACCD48 /* module.map */,
-			);
-			path = CommonCrypto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -467,6 +457,7 @@
 					011163141E1480F1004B5293 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = LU4EN4MKCR;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					0186F72F1C285B3700ACCD48 = {

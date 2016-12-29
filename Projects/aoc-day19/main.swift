@@ -19,7 +19,7 @@ let replacements : [(a: String, b: String)] = lines
 let medicine = lines.last!
 
 // Part One
-func singlePassMutations(molecule: String, replacements: [(a: String, b: String)]) -> [String] {
+func singlePassMutations(_ molecule: String, replacements: [(a: String, b: String)]) -> [String] {
     
     var mutations = [String]()
     
@@ -33,13 +33,48 @@ func singlePassMutations(molecule: String, replacements: [(a: String, b: String)
     return mutations
 }
 
-let unique = Set(singlePassMutations(molecule: medicine, replacements: replacements))
+let unique = Set(singlePassMutations(medicine, replacements: replacements))
 print ("1) \(unique.count)")
 
 // Part Two
 
-func demutate(molecule: String, replacements: [(a: String, b: String)]) -> String {
+func demutate(_ molecule: String, replacements: [(a: String, b: String)]) -> (molecule: String, steps: Int) {
     
-    // Strategy: always try to do the largest one first
-//    let sorted = repl
+    var str = molecule
+    
+    let sorted = replacements.sorted { $0.b > $1.b }
+    
+    var index = 0
+    
+    var steps = 0
+    
+    while index < sorted.count {
+        
+        let replacement = sorted[index]
+        var newStr = str
+
+        var r = Range<String.Index>(uncheckedBounds: (lower: newStr.startIndex, upper: newStr.endIndex))
+
+        while let range = newStr.range(of: replacement.b, options: String.CompareOptions.init(rawValue: 0), range: r, locale: nil) {
+            let newNewStr = newStr.replacingCharacters(in: range, with: replacement.a)
+            if newNewStr != newStr {
+                steps += 1
+                //print ("After \(replacement.b) => \(replacement.a):\t\(newStr)")
+                newStr = newNewStr
+            }
+            r = Range<String.Index>(uncheckedBounds: (lower: min(range.upperBound, newStr.endIndex), upper: newStr.endIndex))
+        }
+        
+        if newStr != str {
+            index = 0
+            str = newStr
+        }
+        else {
+            index += 1
+        }
+    }
+    return (str, steps)
 }
+
+
+print ("2) \(demutate(medicine, replacements: replacements))")
